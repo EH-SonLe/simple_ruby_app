@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(sqlite3 storage/development.sqlite3 \".tables\")",
+      "Bash(bundle install *)"
+    ]
+  }
+}
