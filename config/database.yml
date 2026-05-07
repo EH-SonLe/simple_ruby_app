@@ -1,15 +1,15 @@
 default: &default
-  adapter: sqlite3
+  adapter: postgresql
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   timeout: 5000
 
 development:
   <<: *default
-  database: storage/development.sqlite3
+  database: simple_ruby_app_development
 
 test:
   <<: *default
-  database: storage/test.sqlite3
+  database: simple_ruby_app_test
 
 production:
   adapter: postgresql
