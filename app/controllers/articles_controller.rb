@@ -1,6 +1,9 @@
 class ArticlesController < ApplicationController
+  protect_from_forgery with: :null_session
+
   def show
     @article = Article.find(params[:id])
+    render json: @article
   end
 
   def index
@@ -16,11 +19,24 @@ class ArticlesController < ApplicationController
   end
 
   def create
-    @article = Article.new(params.require(:article).permit(:title, :description))
+    @article = Article.new(params.permit(:title, :description))
     if @article.save
-      redirect_to article_path(@article)
+      render json: @article
     else
-      render 'new'
+      render json: { errors: @article.errors.full_messages }
+    end
+  end
+
+  def edit
+    @article = Article.find(params[:id])
+  end
+
+  def update
+    @article = Article.find(params[:id])
+    if @article.update(params.permit(:title, :description))
+      render json: @article
+    else
+      render json: { errors: @article.errors.full_messages }
     end
   end
 end
