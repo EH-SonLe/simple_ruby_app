@@ -7,6 +7,22 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
-Article.create(title: "First article", description: "Description of first article")
-Article.create(title: "Second article", description: "Description of second article")
-Article.create(title: "Some fun article", description: "This article is a lot of fun")
+user = User.find_or_create_by(id: 1) do |u|
+  u.username = "admin"
+  u.email = "admin@example.com"
+end
+
+Article.find_or_create_by(title: "First article") do |a|
+  a.description = "Description of first article"
+  a.user_id = user.id
+end
+
+Article.find_or_create_by(title: "Second article") do |a|
+  a.description = "Description of second article"
+  a.user_id = user.id
+end
+
+Article.find_or_create_by(title: "Some fun article") do |a|
+  a.description = "This article is a lot of fun"
+  a.user_id = user.id
+end
