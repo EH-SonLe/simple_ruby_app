@@ -20,6 +20,7 @@ class ArticlesController < ApplicationController
 
   def create
     @article = Article.new(params.permit(:title, :description))
+    @article.user = User.first
     if @article.save
       render json: @article
     else
