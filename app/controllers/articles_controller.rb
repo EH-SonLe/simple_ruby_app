@@ -1,6 +1,4 @@
 class ArticlesController < ApplicationController
-  protect_from_forgery with: :null_session
-
   def show
     @article = Article.find(params[:id])
     render json: @article

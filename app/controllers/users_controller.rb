@@ -1,15 +1,35 @@
 class UsersController < ApplicationController
-  protect_from_forgery with: :null_session
-
   def new
     @user = User.new
-    render html: "<h1>User Sign up page</h1>".html_safe
+  end
+
+  def index
+    render html: "<h1>Show users</h1>".html_safe
+  end
+
+  def shows
+    @user = User.find(params[:id])
+    render json: @user
   end
 
   def create
     @user = User.new(params.permit(:username, :email, :password))
     if @user.save
       session[:user_id] = @user.id
+      render json: { success: true }
+    else
+      render json: { errors: @user.errors.full_messages }
+    end
+  end
+
+  def edit
+    @user = User.find(params[:id])
+    render html: "<h1>Edit user</h1>".html_safe
+  end
+
+  def update
+    @user = User.find(params[:id])
+    if @user.update(params.permit(:username, :email, :password))
       render json: { success: true }
     else
       render json: { errors: @user.errors.full_messages }
