@@ -7,9 +7,11 @@ class UsersController < ApplicationController
     render html: "<h1>Show users</h1>".html_safe
   end
 
-  def shows
+  def show
     @user = User.find(params[:id])
-    render json: @user
+    render json: {
+      data: UserSerializer.new(@user, include: [:articles]).serializable_hash
+    }
   end
 
   def create
