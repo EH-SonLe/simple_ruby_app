@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  mount BaseApi => '/'
+
   root "pages#home"
   resources :articles
 
