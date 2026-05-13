@@ -9,7 +9,12 @@ module V1
       requires :password, type: String, desc: "The password of the user"
     end
     post '/signup' do
-      User.create(username: params[:username], email: params[:email], password: params[:password])
+      user = User.new(username: params[:username], email: params[:email], password: params[:password])
+      if user.save
+        UserSerializer.new(user, include: [:articles]).serializable_hash
+      else
+        error!({ errors: user.errors.full_messages }, 422)
+      end
     end
 
     resource :users do
